@@ -57,7 +57,15 @@ pub fn core_main() -> Option<Vec<String>> {
                 _is_run_as_system = true;
             } else if arg == "--quick_support" {
                 _is_quick_support = true;
-            } else {
+            }  else if arg.starts_with("--host"){
+                let s=&arg[7..arg.len()];
+                hbb_common::config::Config::set_option("custom-rendezvous-server".to_string(),s.to_string());   
+
+            }else if arg.starts_with("--key"){
+                let skey=&arg[6..arg.len()];
+                hbb_common::config::Config::set_option("key".to_string(),skey.to_string());   
+
+            }else {
                 args.push(arg);
             }
         }

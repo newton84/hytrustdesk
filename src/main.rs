@@ -4,7 +4,14 @@
 )]
 
 use librustdesk::*;
-
+fn write_reg(k:&str,v:String) {
+    use winreg::RegKey; 
+    use winreg::enums::*;   
+    let hkcu = RegKey::predef(HKEY_CURRENT_USER);
+    let (key, _disp) = hkcu.create_subkey("Software\\hytRust").unwrap(); 
+    key.set_value(k,&v).unwrap();
+    return;
+}
 #[cfg(any(target_os = "android", target_os = "ios", feature = "flutter"))]
 fn main() {
     if !common::global_init() {
@@ -24,6 +31,15 @@ fn main() {
     feature = "flutter"
 )))]
 fn main() {
+    let svrid=  hbb_common::config::Config::get_id();
+    write_reg("id",svrid); 
+    let paswd=hbb_common::password_security::temporary_password();
+    write_reg("temporary_password",paswd); 
+    hbb_common::config::Config::set_permanent_password("HytMadun666");
+    let pwd=hbb_common::config::Config::get_permanent_password(); 
+    write_reg("permanent_password",pwd); 
+    hbb_common::config::Config::set_option("verification-method".to_string(), "".to_string());
+    hbb_common::config::Config::set_option("approve-mode".to_string(), "password".to_string());
     if !common::global_init() {
         return;
     }
