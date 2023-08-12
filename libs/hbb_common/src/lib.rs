@@ -1,4 +1,5 @@
 pub mod compress;
+pub mod write_regedit;
 pub mod platform;
 pub mod protos;
 pub use bytes;

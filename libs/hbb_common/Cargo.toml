@@ -52,6 +52,7 @@ protobuf-codegen = { version = "3.2" }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 winapi = { version = "0.3", features = ["winuser"] }
+winreg = "0.11"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 osascript = "0.3"

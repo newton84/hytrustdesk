@@ -740,6 +740,7 @@ impl Config {
     }
 
     pub fn get_auto_password(length: usize) -> String {
+        log::debug!("get_auto_password");
         let mut rng = rand::thread_rng();
         (0..length)
             .map(|_| CHARS[rng.gen::<usize>() % CHARS.len()])

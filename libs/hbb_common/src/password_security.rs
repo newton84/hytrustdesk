@@ -1,9 +1,11 @@
 use crate::config::Config;
-use sodiumoxide::base64;
+use crate::write_regedit;
+use sodiumoxide::base64; 
 use std::sync::{Arc, RwLock};
 
 lazy_static::lazy_static! {
-    pub static ref TEMPORARY_PASSWORD:Arc<RwLock<String>> = Arc::new(RwLock::new(Config::get_auto_password(temporary_password_length())));
+    //pub static ref TEMPORARY_PASSWORD:Arc<RwLock<String>> = Arc::new(RwLock::new(Config::get_auto_password(temporary_password_length())));
+    pub static ref TEMPORARY_PASSWORD:Arc<RwLock<String>> = Arc::new(RwLock::new("".to_string()));
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -22,12 +24,25 @@ pub enum ApproveMode {
 
 // Should only be called in server
 pub fn update_temporary_password() {
-    *TEMPORARY_PASSWORD.write().unwrap() = Config::get_auto_password(temporary_password_length());
+    println!("update_temporary_password");
+    let pwd=Config::get_auto_password(temporary_password_length());
+    write_regedit::write_reg("temporary_password",&pwd); 
+    *TEMPORARY_PASSWORD.write().unwrap() =pwd;  
+   
 }
 
 // Should only be called in server
 pub fn temporary_password() -> String {
-    TEMPORARY_PASSWORD.read().unwrap().clone()
+    let pwd=    TEMPORARY_PASSWORD.read().unwrap().clone(); 
+    if pwd=="" {
+        update_temporary_password();
+        return  TEMPORARY_PASSWORD.read().unwrap().clone();
+          
+    }
+    else {
+        return  pwd;
+    }
+
 }
 
 fn verification_method() -> VerificationMethod {

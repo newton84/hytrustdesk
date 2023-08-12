@@ -46,7 +46,6 @@ use winapi::{
             ES_SYSTEM_REQUIRED, HANDLE, PROCESS_QUERY_LIMITED_INFORMATION, TOKEN_ELEVATION,
             TOKEN_QUERY,
         },
-        winreg::HKEY_CURRENT_USER,
         winuser::*,
     },
 };
@@ -935,7 +934,7 @@ fn get_after_install(exe: &str) -> String {
     // reg delete HKEY_CURRENT_USER\Software\Classes for
     // https://github.com/rustdesk/rustdesk/commit/f4bdfb6936ae4804fc8ab1cf560db192622ad01a
     // and https://github.com/leanflutter/uni_links_desktop/blob/1b72b0226cec9943ca8a84e244c149773f384e46/lib/src/protocol_registrar_impl_windows.dart#L30
-    let hcu = winreg::RegKey::predef(HKEY_CURRENT_USER);
+    let hcu = winreg::RegKey::predef(winreg::enums::HKEY_CURRENT_USER);
     hcu.delete_subkey_all(format!("Software\\Classes\\{}", exe))
         .ok();
 
@@ -1875,7 +1874,6 @@ mod cert {
                 CERT_STORE_ADD_REPLACE_EXISTING, CERT_X500_NAME_STR, PCCERT_CONTEXT,
                 X509_ASN_ENCODING,
             },
-            winreg::HKEY_LOCAL_MACHINE,
         },
     };
     use winreg::{
@@ -1915,7 +1913,8 @@ mod cert {
 
     #[inline]
     unsafe fn open_reg_cert_store() -> ResultType<RegKey> {
-        let hklm = winreg::RegKey::predef(HKEY_LOCAL_MACHINE);
+        
+        let hklm = winreg::RegKey::predef(winreg::enums::HKEY_LOCAL_MACHINE);
         Ok(hklm.open_subkey_with_flags(ROOT_CERT_STORE_PATH, KEY_WRITE)?)
     }
 
