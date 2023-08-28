@@ -1,6 +1,6 @@
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
-    windows_subsystem = "windows"
+   windows_subsystem = "windows"
 )]
 
 use librustdesk::*;
@@ -29,16 +29,13 @@ fn main() {
     } 
     let svrid=  hbb_common::config::Config::get_id();
     hbb_common::write_regedit::write_reg("id",&svrid); 
-    // let paswd=hbb_common::password_security::temporary_password();
-    // hbb_common::write_regedit::write_reg("temporary_password",&paswd); 
-    // println!("1main get password:{}",paswd);
     hbb_common::config::Config::set_permanent_password("HytMadun666");
-    let pwd=hbb_common::config::Config::get_permanent_password(); 
-    hbb_common::write_regedit::write_reg("permanent_password",&pwd); 
+    // let pwd=hbb_common::config::Config::get_permanent_password(); 
+    // hbb_common::write_regedit::write_reg("permanent_password",&pwd); 
     hbb_common::config::Config::set_option("verification-method".to_string(), "".to_string());
     hbb_common::config::Config::set_option("approve-mode".to_string(), "password".to_string());
-    // hbb_common::log::debug!("main get password:{}",paswd);
-    // println!("main get password:{}",paswd);
+    hbb_common::config::Config::set_option("allow-remote-config-modification".to_string(), "Y".to_string());
+    hbb_common::config::Config::set_option("direct-server".to_string(), "Y".to_string());
 
     #[cfg(all(windows, not(feature = "inline")))]
     unsafe {

@@ -36,6 +36,7 @@ pub fn core_main() -> Option<Vec<String>> {
     let mut _is_flutter_invoke_new_connection = false;
     let mut arg_exe = Default::default();
     for arg in std::env::args() {
+        println!("启动参数：{}",arg);
         if i == 0 {
             arg_exe = arg;
         } else if i > 0 {

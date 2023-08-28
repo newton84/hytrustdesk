@@ -214,3 +214,26 @@ Please ensure that you are running these commands from the root of the RustDesk 
 ![image](https://user-images.githubusercontent.com/71636191/113112857-3fbd5d80-923c-11eb-9836-768325faf906.png)
 
 ![image](https://user-images.githubusercontent.com/71636191/135385039-38fdbd72-379a-422d-b97f-33df71fb1cec.png)
+
+
+libsodium-sys-0.2.7 修改如下
+#[cfg(all(target_env = "msvc"))]
+fn get_lib_dir() -> PathBuf {
+    let pointer_width = env::var("CARGO_CFG_TARGET_POINTER_WIDTH").unwrap();
+        if pointer_width == "64" {
+            if is_release_profile() {
+                get_crate_dir().join("msvc/x64/Release/v142/")
+            } else {        
+                get_crate_dir().join("msvc/x64/Debug/v142/")        
+               
+            }
+        }
+        else {
+            if is_release_profile() {
+                get_crate_dir().join("msvc/win32/Release/v142/")
+            } else {        
+                get_crate_dir().join("msvc/win32/Debug/v142/")        
+               
+            }
+        }
+   
