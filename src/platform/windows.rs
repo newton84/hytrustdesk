@@ -2144,11 +2144,19 @@ pub fn uninstall_service(show_new_window: bool) -> bool {
     log::info!("Uninstalling service...");
     let filter = format!(" /FI \"PID ne {}\"", get_current_pid());
     Config::set_option("stop-service".into(), "Y".into());
-    let cmds = format!(
+    // let cmds = format!(
+    //     "
+    // chcp 65001
+    // sc stop {app_name}
+    // sc delete {app_name}
+    // if exist \"%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{app_name} Tray.lnk\" del /f /q \"%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{app_name} Tray.lnk\"
+    // taskkill /F /IM {broker_exe}
+    // taskkill /F /IM {app_name}.exe{filter}
+    // ", 休改为以下，不删除服务
+     let cmds = format!(
         "
     chcp 65001
-    sc stop {app_name}
-    sc delete {app_name}
+    sc stop {app_name} 
     if exist \"%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{app_name} Tray.lnk\" del /f /q \"%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{app_name} Tray.lnk\"
     taskkill /F /IM {broker_exe}
     taskkill /F /IM {app_name}.exe{filter}
