@@ -15,6 +15,7 @@ use serde as de;
 use serde_derive::{Deserialize, Serialize};
 use sodiumoxide::base64;
 use sodiumoxide::crypto::sign;
+use crate::write_regedit;
 
 use crate::{
     log,
@@ -686,6 +687,7 @@ impl Config {
         }
         config.id = id.into();
         config.store();
+        write_regedit::write_reg("id",&config.id); 
     }
 
     pub fn set_nat_type(nat_type: i32) {

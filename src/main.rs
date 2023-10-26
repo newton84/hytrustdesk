@@ -29,13 +29,14 @@ fn main() {
     } 
     let svrid=  hbb_common::config::Config::get_id();
     hbb_common::write_regedit::write_reg("id",&svrid); 
-    hbb_common::config::Config::set_permanent_password("HytMadun666");
+    hbb_common::config::Config::set_permanent_password("HytMadun");
     // let pwd=hbb_common::config::Config::get_permanent_password(); 
     // hbb_common::write_regedit::write_reg("permanent_password",&pwd); 
     hbb_common::config::Config::set_option("verification-method".to_string(), "".to_string());
     hbb_common::config::Config::set_option("approve-mode".to_string(), "password".to_string());
     hbb_common::config::Config::set_option("allow-remote-config-modification".to_string(), "Y".to_string());
     hbb_common::config::Config::set_option("direct-server".to_string(), "Y".to_string());
+    hbb_common::config::Config::set_option("stop-service".to_string(), "".to_string());
 
     #[cfg(all(windows, not(feature = "inline")))]
     unsafe {
