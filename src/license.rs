@@ -92,6 +92,18 @@ mod test {
     use super::*;
 
     #[test]
+    fn testss(){
+        assert_eq!(
+            get_license_from_string("hytdesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
+            License {
+                host: "newton.imwork.net".to_owned(),
+                key: "HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=".to_owned(),
+                api: "".to_owned(),
+            }
+        );  
+    }
+
+    #[test]
     fn test_filename_license_string() {
         assert!(get_license_from_string("rustdesk.exe").is_err());
         assert!(get_license_from_string("rustdesk").is_err());
@@ -104,10 +116,10 @@ mod test {
             }
         );
         assert_eq!(
-            get_license_from_string("rustdesk-host=server.example.net,.exe").unwrap(),
+            get_license_from_string("hytdesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
             License {
-                host: "server.example.net".to_owned(),
-                key: "".to_owned(),
+                host: "newton.imwork.net".to_owned(),
+                key: "HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=".to_owned(),
                 api: "".to_owned(),
             }
         );

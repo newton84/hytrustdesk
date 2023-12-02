@@ -138,7 +138,7 @@ members = ["libs/scrap", "libs/hbb_common", "libs/enigo", "libs/clipboard", "lib
 exclude = ["vdi/host", "examples/custom_plugin"]
 
 [package.metadata.winres]
-LegalCopyright = "Copyright © 2023 Purslane, Inc."
+LegalCopyright = "Copyright © 2023 HYT"
 # this FileDescription overrides package.description
 FileDescription = "远程桌面工具"
 

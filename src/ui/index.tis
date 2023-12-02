@@ -44,9 +44,9 @@ class ConnectStatus: Reactor.Component {
             return translate('not_ready_status');
         } else if (connect_status == 0) {
             return translate('connecting_status');
+        } else {
+            return translate('Ready'); 
         }
-        if (!handler.using_public_server()) return translate('Ready');
-        return <span>{translate("Ready")}, <span .link #setup-server>{translate("setup_server_tip")}</span></span>;
     }
 
     event click $(#start-service) () {
@@ -693,18 +693,15 @@ class TrustMe: Reactor.Component {
             <div>{translate('Permissions')}</div>
             <div>{translate('config_acc')}</div>
             <div #trust-me .link>{translate('Configure')}</div>
-            <div #help-me .link>{translate('Help')}</div>
+           
         </div>;
     }
 
     event click $(#trust-me) {
         handler.is_process_trusted(true);
         watch_trust();
-    }
+    }    
     
-    event click $(#help-me) {
-        handler.open_url(translate("doc_mac_permission"));
-    }
 }
 
 class CanScreenRecording: Reactor.Component {
@@ -713,18 +710,15 @@ class CanScreenRecording: Reactor.Component {
             <div>{translate('Permissions')}</div>
             <div>{translate('config_screen')}</div>
             <div #screen-recording .link>{translate('Configure')}</div>
-            <div #help-me .link>{translate('Help')}</div>
+            
         </div>;
     }
 
     event click $(#screen-recording) {
         handler.is_can_screen_recording(true);
         watch_screen_recording();
-    }
+    }    
     
-    event click $(#help-me) {
-        handler.open_url(translate("doc_mac_permission"));
-    }
 }
 
 class InstallDaemon: Reactor.Component {
@@ -746,13 +740,11 @@ class FixWayland: Reactor.Component {
         return <div .trust-me>
             <div>{translate('Warning')}</div>
             <div>{translate('Login screen using Wayland is not supported')}</div>
-            <div #help-me .link>{translate('Help')}</div>
+            
         </div>;
     }
 
-    event click $(#help-me) {
-        handler.open_url(translate("doc_fix_wayland"));
-    }
+   
 }
 
 class ModifyDefaultLogin: Reactor.Component {
@@ -760,13 +752,10 @@ class ModifyDefaultLogin: Reactor.Component {
         return <div .trust-me>
             <div>{translate('Warning')}</div>
             <div>{translate('wayland_experiment_tip')}</div>
-            <div #help-me .link>{translate('Help')}</div>
+            
         </div>;
     }
-
-    event click $(#help-me) {
-        handler.open_url(translate("doc_fix_wayland"));
-    }
+   
 }
 
 function watch_trust() {
