@@ -76,9 +76,12 @@ pub fn start(args: &mut [String]) {
     allow_err!(sciter::set_options(sciter::RuntimeOptions::ScriptFeatures(
         ALLOW_FILE_IO as u8 | ALLOW_SOCKET_IO as u8 | ALLOW_EVAL as u8 | ALLOW_SYSINFO as u8
     )));
+    #[cfg(debug_assertions)]
+    allow_err!(sciter::set_options(sciter::RuntimeOptions::DebugMode(true)));
     let mut frame = sciter::WindowBuilder::main_window().create();
     #[cfg(windows)]
     allow_err!(sciter::set_options(sciter::RuntimeOptions::UxTheming(true)));
+   
     frame.set_title(&crate::get_app_name());
     #[cfg(target_os = "macos")]
     crate::platform::delegate::make_menubar(frame.get_host(), args.is_empty());
@@ -108,12 +111,12 @@ pub fn start(args: &mut [String]) {
         frame.sciter_handler(UIHostHandler {});
         page = "install.html";
     } else if args[0] == "--cm" {
-        // frame.register_behavior("connection-manager", move || {
-        //     Box::new(cm::SciterConnectionManager::new())
-        // });
-        // page = "cm.html"; //不显示连接管理窗口
-        log::error!("Wrong command: {:?}", args);
-        return;
+        frame.register_behavior("connection-manager", move || {
+            Box::new(cm::SciterConnectionManager::new())
+        });
+        page = "cm.html"; //不显示连接管理窗口
+        // log::error!("Wrong command: {:?}", args);
+        // return;
     } else if (args[0] == "--connect"
         || args[0] == "--file-transfer"
         || args[0] == "--port-forward"

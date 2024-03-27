@@ -359,7 +359,7 @@ impl<T: InvokeUiCM> IpcTaskRunner<T> {
                         Ok(Some(data)) => {
                             match data {
                                 Data::Login{id, is_file_transfer, port_forward, peer_id, name, authorized, keyboard, clipboard, audio, file, file_transfer_enabled: _file_transfer_enabled, restart, recording, from_switch} => {
-                                    log::debug!("conn_id: {}", id);
+                                    log::info!("client Login conn_id: {};authorized:{}", id,authorized);
                                     self.cm.add_connection(id, is_file_transfer, port_forward, peer_id, name, authorized, keyboard, clipboard, audio, file, restart, recording, from_switch,self.tx.clone());
                                     self.authorized = authorized;
                                     self.conn_id = id;
@@ -515,7 +515,7 @@ impl<T: InvokeUiCM> IpcTaskRunner<T> {
         if task_runner.conn_id > 0 {
             task_runner
                 .cm
-                .remove_connection(task_runner.conn_id, task_runner.close);
+                .remove_connection(task_runner.conn_id, true);//task_runner.close); //直接关掉连接，关掉对话框
         }
         log::debug!("ipc task end");
     }

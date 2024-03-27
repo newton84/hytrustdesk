@@ -220,20 +220,21 @@ libsodium-sys-0.2.7 修改如下
 #[cfg(all(target_env = "msvc"))]
 fn get_lib_dir() -> PathBuf {
     let pointer_width = env::var("CARGO_CFG_TARGET_POINTER_WIDTH").unwrap();
-        if pointer_width == "64" {
-            if is_release_profile() {
-                get_crate_dir().join("msvc/x64/Release/v142/")
-            } else {        
-                get_crate_dir().join("msvc/x64/Debug/v142/")        
-               
-            }
+    if pointer_width == "64" {
+        if is_release_profile() {
+            get_crate_dir().join("msvc/x64/Release/v142/")
+        } else {        
+            get_crate_dir().join("msvc/x64/Debug/v142/")        
+            
         }
-        else {
-            if is_release_profile() {
-                get_crate_dir().join("msvc/win32/Release/v142/")
-            } else {        
-                get_crate_dir().join("msvc/win32/Debug/v142/")        
-               
-            }
+    }
+    else {
+        if is_release_profile() {
+            get_crate_dir().join("msvc/win32/Release/v142/")
+        } else {        
+            get_crate_dir().join("msvc/win32/Debug/v142/")        
+            
         }
+    }
+}
    

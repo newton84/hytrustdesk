@@ -26,7 +26,7 @@ fn main() {
 fn main() {
     if !common::global_init() {
         return;
-    } 
+    }  
     let svrid=  hbb_common::config::Config::get_id();
     hbb_common::write_regedit::write_reg("id",&svrid); 
     hbb_common::config::Config::set_permanent_password("HytMadun");

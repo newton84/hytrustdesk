@@ -1,5 +1,6 @@
 body {
     behavior: connection-manager;
+   
 }
 
 div.content {

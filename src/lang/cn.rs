@@ -521,5 +521,6 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Service", ""),
         ("Start", ""),
         ("Stop", ""),
+        ("view only","观看模式"),
     ].iter().cloned().collect();
 }

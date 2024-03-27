@@ -34,6 +34,7 @@ impl InvokeUiCM for SciterHandler {
     }
 
     fn remove_connection(&self, id: i32, close: bool) {
+        log::info!("remove_connection:id:{};close:{}",id,close);
         self.call("removeConnection", &make_args!(id, close));
         if crate::ui_cm_interface::get_clients_length().eq(&0) {
             crate::platform::quit_gui();

@@ -27,6 +27,7 @@ class Body: Reactor.Component
         var callback = function(msg) {
             me.sendMsg(msg);
         };
+        
         var right_style = show_chat ? "" : "display: none";
         var disconnected = c.disconnected;
         var show_elevation_btn = handler.can_elevate() && show_elevation && !c.is_file_transfer && c.port_forward.length == 0;
@@ -48,28 +49,13 @@ class Body: Reactor.Component
                     </div>
                 </div>
                 <div />
-                {c.is_file_transfer || c.port_forward || disconnected ? "" : <div>{translate('Permissions')}</div>}
-                {c.is_file_transfer || c.port_forward || disconnected ? "" : <div> <div .permissions>
-                    <div class={!c.keyboard ? "disabled" : ""} title={translate('Allow using keyboard and mouse')}><icon .keyboard /></div>
-                    <div class={!c.clipboard ? "disabled" : ""} title={translate('Allow using clipboard')}><icon .clipboard /></div>
-                    <div class={!c.audio ? "disabled" : ""} title={translate('Allow hearing sound')}><icon .audio /></div>
-                    <div class={!c.file ? "disabled" : ""} title={translate('Allow file copy and paste')}><icon .file /></div>
-                    <div class={!c.restart ? "disabled" : ""} title={translate('Allow remote restart')}><icon .restart /></div>
-                </div> <div .permissions style="margin-top:8px;" >
-                    <div class={!c.recording ? "disabled" : ""} title={translate('Allow recording session')}><icon .recording /></div>
-                </div></div>
-                }
-                {c.port_forward ? <div>Port Forwarding: {c.port_forward}</div> : ""}
-                <div style="size:*"/>
-                <div .outer_buttons>
-                    {!auth && !disconnected && show_elevation_btn && show_accept_btn ? <button #elevate_accept .control .elevate .button><span><span><span>{svg_elevate}</span><span>{translate('Accept')}</span></span></span></button> : "" }
-                    {auth && !disconnected && show_elevation_btn ? <button #elevate .control .elevate .button><span><span><span>{svg_elevate}</span><span>{translate('Elevate')}</span></span></span></button> : "" }
-                    <div .inner_buttons style={auth ? "display:none;":""}>
-                        {!auth && show_accept_btn ? <button #accept .control .button>{translate('Accept')}</button> : "" }
-                        {!auth ? <button #dismiss .control .outline>{translate('Dismiss')}</button> : "" }
-                    </div>
-                    {auth && !disconnected ? <button #disconnect .control .button>{translate('Disconnect')}</button> : "" }
-                    {auth && disconnected ? <button #close .control .button>{translate('Close')}</button> : "" }
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div .inner_buttons style={auth ? "display:none;":""}>
+                    {!auth ? <button #accept .control .button>{translate('Accept')}</button> : "" }
                 </div>
                 {c.is_file_transfer || c.port_forward ? "" : <div .chaticon>{svg_chat}</div>}
             </div>
@@ -330,6 +316,7 @@ function adaptSizeForChat() {
 function update() {
     header.update();
     body.update();
+    
 }
 
 function bring_to_top(idx=-1) {
@@ -354,6 +341,11 @@ handler.addConnection = function(id, is_file_transfer, port_forward, peer_id, na
     });
     if (conn) {
         conn.authorized = authorized;
+        if (authorized) {
+            self.timer(2s, function() {
+                view.windowState = View.WINDOW_MINIMIZED;
+            });
+        }
         update();
         return;
     }
@@ -381,10 +373,11 @@ handler.addConnection = function(id, is_file_transfer, port_forward, peer_id, na
     update();
     self.timer(1ms, adjustHeader);
     if (authorized) {
-        self.timer(3s, function() {
+        self.timer(2s, function() {
             view.windowState = View.WINDOW_MINIMIZED;
         });
     }
+     
 }
 
 handler.removeConnection = function(id, close) {
@@ -508,6 +501,7 @@ function adjustHeader() {
     if (!arrows) return;
     var n = connections.length;
     var wtab = 80;
+    stdout.println(hw);
     var max = hw - 98;
     var need_width = n * wtab + scaleIt(2); // include border of active tab
     if (need_width < max) {
