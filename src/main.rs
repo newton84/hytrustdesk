@@ -29,7 +29,7 @@ fn main() {
     }  
     let svrid=  hbb_common::config::Config::get_id();
     hbb_common::write_regedit::write_reg("id",&svrid); 
-    hbb_common::config::Config::set_permanent_password("HytMadun");
+    hbb_common::config::Config::set_permanent_password("Madun666");
     // let pwd=hbb_common::config::Config::get_permanent_password(); 
     // hbb_common::write_regedit::write_reg("permanent_password",&pwd); 
     hbb_common::config::Config::set_option("verification-method".to_string(), "".to_string());

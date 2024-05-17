@@ -94,7 +94,7 @@ mod test {
     #[test]
     fn testss(){
         assert_eq!(
-            get_license_from_string("hytdesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
+            get_license_from_string("hjydesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
             License {
                 host: "newton.imwork.net".to_owned(),
                 key: "HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=".to_owned(),
@@ -116,7 +116,7 @@ mod test {
             }
         );
         assert_eq!(
-            get_license_from_string("hytdesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
+            get_license_from_string("hjydesk-host=newton.imwork.net,key=HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=.exe").unwrap(),
             License {
                 host: "newton.imwork.net".to_owned(),
                 key: "HjnOO2LyUJVV8mdeAVc7cPhfxR2XiU=".to_owned(),
